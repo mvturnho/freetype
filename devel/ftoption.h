@@ -1,10 +1,10 @@
 /****************************************************************************
  *
- * ftoption.h (for development)
+ * ftoption.h
  *
  *   User-selectable configuration macros (specification only).
  *
- * Copyright (C) 1996-2026 by
+ * Copyright (C) 1996-2021 by
  * David Turner, Robert Wilhelm, and Werner Lemberg.
  *
  * This file is part of the FreeType project, and may only be used,
@@ -14,7 +14,6 @@
  * understand and accept it fully.
  *
  */
-
 
 #ifndef FTOPTION_H_
 #define FTOPTION_H_
@@ -105,11 +104,12 @@ FT_BEGIN_HEADER
    *
    * ```
    *   FREETYPE_PROPERTIES=truetype:interpreter-version=35 \
-   *                       cff:no-stem-darkening=1
+   *                       cff:no-stem-darkening=1 \
+   *                       autofitter:warping=1
    * ```
    *
    */
-#define FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+// #define FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
 
 
   /**************************************************************************
@@ -158,14 +158,14 @@ FT_BEGIN_HEADER
 
   /**************************************************************************
    *
-   * If this macro is defined, try to use an inlined 64-bit or assembler
-   * version of the @FT_MulFix function, which is a 'hotspot' when loading
-   * and hinting glyphs, and which should be executed as fast as possible.
+   * If this macro is defined, try to use an inlined assembler version of the
+   * @FT_MulFix function, which is a 'hotspot' when loading and hinting
+   * glyphs, and which should be executed as fast as possible.
    *
-   * If your compiler is not C99-compliant or CPU assembly is not supported,
-   * you can disable this option.
+   * Note that if your compiler or CPU is not supported, this will default to
+   * the standard and portable implementation found in `ftcalc.c`.
    */
-#define FT_CONFIG_OPTION_INLINE_MULFIX
+// #define FT_CONFIG_OPTION_INLINE_MULFIX
 
 
   /**************************************************************************
@@ -180,7 +180,7 @@ FT_BEGIN_HEADER
    *
    *   Define this macro if you want to enable this 'feature'.
    */
-#define FT_CONFIG_OPTION_USE_LZW
+// #define FT_CONFIG_OPTION_USE_LZW
 
 
   /**************************************************************************
@@ -195,7 +195,7 @@ FT_BEGIN_HEADER
    *   Define this macro if you want to enable this 'feature'.  See also the
    *   macro `FT_CONFIG_OPTION_SYSTEM_ZLIB` below.
    */
-#define FT_CONFIG_OPTION_USE_ZLIB
+// #define FT_CONFIG_OPTION_USE_ZLIB
 
 
   /**************************************************************************
@@ -219,10 +219,6 @@ FT_BEGIN_HEADER
    *   If you use a build system like cmake or the `configure` script,
    *   options set by those programs have precedence, overwriting the value
    *   here with the configured one.
-   *
-   *   If you use the GNU make build system directly (that is, without the
-   *   `configure` script) and you define this macro, you also have to pass
-   *   `SYSTEM_ZLIB=yes` as an argument to make.
    */
 /* #define FT_CONFIG_OPTION_SYSTEM_ZLIB */
 
@@ -244,7 +240,7 @@ FT_BEGIN_HEADER
    *   options set by those programs have precedence, overwriting the value
    *   here with the configured one.
    */
-#define FT_CONFIG_OPTION_USE_BZIP2
+/* #define FT_CONFIG_OPTION_USE_BZIP2 */
 
 
   /**************************************************************************
@@ -273,7 +269,7 @@ FT_BEGIN_HEADER
    *   options set by those programs have precedence, overwriting the value
    *   here with the configured one.
    */
-#define FT_CONFIG_OPTION_USE_PNG
+/* #define FT_CONFIG_OPTION_USE_PNG */
 
 
   /**************************************************************************
@@ -290,48 +286,7 @@ FT_BEGIN_HEADER
    *   options set by those programs have precedence, overwriting the value
    *   here with the configured one.
    */
-#define FT_CONFIG_OPTION_USE_HARFBUZZ
-
-
-  /**************************************************************************
-   *
-   * HarfBuzz dynamic support.
-   *
-   *   Define this macro if you want the HarfBuzz library to be loaded at
-   *   runtime instead of being linked to FreeType.
-   *
-   *   This option has no effect if `FT_CONFIG_OPTION_USE_HARFBUZZ` is not
-   *   defined.
-   *
-   *   When this option is enabled, FreeType will try to load the HarfBuzz
-   *   library at runtime, using `dlopen` or `LoadLibrary`, depending on the
-   *   platform.  On Microsoft platforms, the library name looked up is
-   *   `libharfbuzz-0.dll`.  On Apple platforms, the library name looked up
-   *   is `libharfbuzz.0.dylib`.  On all other platforms, the library name
-   *   looked up is `libharfbuzz.so.0`.  This name can be overridden by
-   *   defining the macro `FT_LIBHARFBUZZ` at FreeType compilation time.
-   *
-   *   If you use a build system like cmake or the `configure` script,
-   *   options set by those programs have precedence, overwriting the value
-   *   here with the configured one.
-   */
-#define FT_CONFIG_OPTION_USE_HARFBUZZ_DYNAMIC
-
-
-  /**************************************************************************
-   *
-   * HVF support.
-   *
-   *   FreeType can use Apple's HVF (Hierarchical Variable Font) library
-   *   to render glyphs from fonts containing 'hvgl' tables.
-   *
-   *   Define this macro if you want to enable this 'feature'.
-   *
-   *   If you use a build system like cmake or the `configure` script,
-   *   options set by those programs have precedence, overwriting the value
-   *   here with the configured one.
-   */
-/* #define FT_CONFIG_OPTION_HVF */
+/* #define FT_CONFIG_OPTION_USE_HARFBUZZ */
 
 
   /**************************************************************************
@@ -347,7 +302,7 @@ FT_BEGIN_HEADER
    *   options set by those programs have precedence, overwriting the value
    *   here with the configured one.
    */
-#define FT_CONFIG_OPTION_USE_BROTLI
+/* #define FT_CONFIG_OPTION_USE_BROTLI */
 
 
   /**************************************************************************
@@ -372,7 +327,7 @@ FT_BEGIN_HEADER
    *   You would normally undefine this configuration macro when building a
    *   version of FreeType that doesn't contain a Type~1 or CFF driver.
    */
-#define FT_CONFIG_OPTION_POSTSCRIPT_NAMES
+// #define FT_CONFIG_OPTION_POSTSCRIPT_NAMES
 
 
   /**************************************************************************
@@ -389,7 +344,7 @@ FT_BEGIN_HEADER
    *   in your 'psnames' module.  The Type~1 driver will not be able to
    *   synthesize a Unicode charmap out of the glyphs found in the fonts.
    */
-#define FT_CONFIG_OPTION_ADOBE_GLYPH_LIST
+// #define FT_CONFIG_OPTION_ADOBE_GLYPH_LIST
 
 
   /**************************************************************************
@@ -402,7 +357,7 @@ FT_BEGIN_HEADER
    *
    *   Note that the 'FOND' resource isn't checked.
    */
-#define FT_CONFIG_OPTION_MAC_FONTS
+// #define FT_CONFIG_OPTION_MAC_FONTS
 
 
   /**************************************************************************
@@ -434,15 +389,13 @@ FT_BEGIN_HEADER
    * incrementally as the document is parsed, such as the Ghostscript
    * interpreter for the PostScript language.
    */
-#define FT_CONFIG_OPTION_INCREMENTAL
+// #define FT_CONFIG_OPTION_INCREMENTAL
 
 
   /**************************************************************************
    *
-   * The size in bytes of the stack render pool used by the scan-line
-   * converters.  Use this option to limit the stack usage.  The memory
-   * requirements are proportional to size and complexity of a given glyph.
-   * FreeType's rasterizers switch to dynamic allocations when necessary.
+   * The size in bytes of the render pool used by the scan-line converter to
+   * do all of its work.
    */
 #define FT_RENDER_POOL_SIZE  16384L
 
@@ -474,7 +427,7 @@ FT_BEGIN_HEADER
    *   them for certain configurations only.
    */
 #define FT_DEBUG_LEVEL_ERROR
-#define FT_DEBUG_LEVEL_TRACE
+// #define FT_DEBUG_LEVEL_TRACE
 
 
   /**************************************************************************
@@ -491,7 +444,7 @@ FT_BEGIN_HEADER
    *
    *   This option needs a C99 compiler.
    */
-#define FT_DEBUG_LOGGING
+/* #define FT_DEBUG_LOGGING */
 
 
   /**************************************************************************
@@ -504,9 +457,9 @@ FT_BEGIN_HEADER
    *   while compiling in 'release' mode):
    *
    *   ```
-   *     af_debug_disable_horz_hints_
-   *     af_debug_disable_vert_hints_
-   *     af_debug_disable_blue_hints_
+   *     _af_debug_disable_horz_hints
+   *     _af_debug_disable_vert_hints
+   *     _af_debug_disable_blue_hints
    *   ```
    *
    *   Additionally, the following functions provide dumps of various
@@ -523,7 +476,7 @@ FT_BEGIN_HEADER
    *   As an argument, they use another global variable:
    *
    *   ```
-   *     af_debug_hints_
+   *     _af_debug_hints
    *   ```
    *
    *   Please have a look at the `ftgrid` demo program to see how those
@@ -532,7 +485,7 @@ FT_BEGIN_HEADER
    *   Do not `#undef` these macros here since the build system might define
    *   them for certain configurations only.
    */
-#define FT_DEBUG_AUTOFIT
+/* #define FT_DEBUG_AUTOFIT */
 
 
   /**************************************************************************
@@ -550,7 +503,7 @@ FT_BEGIN_HEADER
    *   Do not `#undef` this macro here since the build system might define it
    *   for certain configurations only.
    */
-#define FT_DEBUG_MEMORY
+/* #define FT_DEBUG_MEMORY */
 
 
   /**************************************************************************
@@ -567,21 +520,7 @@ FT_BEGIN_HEADER
    *
    *   More details can be found in the files `ftmoderr.h` and `fterrors.h`.
    */
-#undef FT_CONFIG_OPTION_USE_MODULE_ERRORS
-
-
-  /**************************************************************************
-   *
-   * OpenType SVG Glyph Support
-   *
-   *   Setting this macro enables support for OpenType SVG glyphs.  By
-   *   default, FreeType can only fetch SVG documents.  However, it can also
-   *   render them if external rendering hook functions are plugged in at
-   *   runtime.
-   *
-   *   More details on the hooks can be found in file `otsvg.h`.
-   */
-#define FT_CONFIG_OPTION_SVG
+/* #undef FT_CONFIG_OPTION_USE_MODULE_ERRORS */
 
 
   /**************************************************************************
@@ -612,7 +551,7 @@ FT_BEGIN_HEADER
    * embedded bitmaps in all formats using the 'sfnt' module (namely
    * TrueType~& OpenType).
    */
-#define TT_CONFIG_OPTION_EMBEDDED_BITMAPS
+//#define TT_CONFIG_OPTION_EMBEDDED_BITMAPS
 
 
   /**************************************************************************
@@ -621,22 +560,22 @@ FT_BEGIN_HEADER
    * outlines (from the 'COLR'/'CPAL' tables) in all formats using the 'sfnt'
    * module (namely TrueType~& OpenType).
    */
-#define TT_CONFIG_OPTION_COLOR_LAYERS
+// #define TT_CONFIG_OPTION_COLOR_LAYERS
 
 
   /**************************************************************************
    *
    * Define `TT_CONFIG_OPTION_POSTSCRIPT_NAMES` if you want to be able to
-   * load and enumerate Postscript names of glyphs in a TrueType or OpenType
+   * load and enumerate the glyph Postscript names in a TrueType or OpenType
    * file.
    *
-   * Note that if you do not compile the 'psnames' module by undefining the
-   * above `FT_CONFIG_OPTION_POSTSCRIPT_NAMES` macro, the 'sfnt' module will
-   * contain additional code to read the PostScript name table from a font.
+   * Note that when you do not compile the 'psnames' module by undefining the
+   * above `FT_CONFIG_OPTION_POSTSCRIPT_NAMES`, the 'sfnt' module will
+   * contain additional code used to read the PS Names table from a font.
    *
    * (By default, the module uses 'psnames' to extract glyph names.)
    */
-#define TT_CONFIG_OPTION_POSTSCRIPT_NAMES
+// #define TT_CONFIG_OPTION_POSTSCRIPT_NAMES
 
 
   /**************************************************************************
@@ -650,7 +589,7 @@ FT_BEGIN_HEADER
    * Accessing SFNT names is done through the functions declared in
    * `ftsnames.h`.
    */
-#define TT_CONFIG_OPTION_SFNT_NAMES
+// #define TT_CONFIG_OPTION_SFNT_NAMES
 
 
   /**************************************************************************
@@ -690,7 +629,7 @@ FT_BEGIN_HEADER
    * Do not `#undef` this macro here, since the build system might define it
    * for certain configurations only.
    */
-#define TT_CONFIG_OPTION_BYTECODE_INTERPRETER
+// #define TT_CONFIG_OPTION_BYTECODE_INTERPRETER
 
 
   /**************************************************************************
@@ -704,12 +643,36 @@ FT_BEGIN_HEADER
    * not) instructions in a certain way so that all TrueType fonts look like
    * they do in a Windows ClearType (DirectWrite) environment.  See [1] for a
    * technical overview on what this means.  See `ttinterp.h` for more
-   * details on this option.
+   * details on the LEAN option.
    *
-   * The new default mode focuses on applying a minimal set of rules to all
-   * fonts indiscriminately so that modern and web fonts render well while
-   * legacy fonts render okay.  The corresponding interpreter version is v40.
-   * The so-called Infinality mode (v38) is no longer available in FreeType.
+   * There are three possible values.
+   *
+   * Value 1:
+   *   This value is associated with the 'Infinality' moniker, contributed by
+   *   an individual nicknamed Infinality with the goal of making TrueType
+   *   fonts render better than on Windows.  A high amount of configurability
+   *   and flexibility, down to rules for single glyphs in fonts, but also
+   *   very slow.  Its experimental and slow nature and the original
+   *   developer losing interest meant that this option was never enabled in
+   *   default builds.
+   *
+   *   The corresponding interpreter version is v38.
+   *
+   * Value 2:
+   *   The new default mode for the TrueType driver.  The Infinality code
+   *   base was stripped to the bare minimum and all configurability removed
+   *   in the name of speed and simplicity.  The configurability was mainly
+   *   aimed at legacy fonts like 'Arial', 'Times New Roman', or 'Courier'.
+   *   Legacy fonts are fonts that modify vertical stems to achieve clean
+   *   black-and-white bitmaps.  The new mode focuses on applying a minimal
+   *   set of rules to all fonts indiscriminately so that modern and web
+   *   fonts render well while legacy fonts render okay.
+   *
+   *   The corresponding interpreter version is v40.
+   *
+   * Value 3:
+   *   Compile both, making both v38 and v40 available (the latter is the
+   *   default).
    *
    * By undefining these, you get rendering behavior like on Windows without
    * ClearType, i.e., Windows XP without ClearType enabled and Win9x
@@ -722,9 +685,11 @@ FT_BEGIN_HEADER
    * defined.
    *
    * [1]
-   * https://learn.microsoft.com/typography/cleartype/truetypecleartype
+   * https://www.microsoft.com/typography/cleartype/truetypecleartype.aspx
    */
-#define TT_CONFIG_OPTION_SUBPIXEL_HINTING
+/* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  1         */
+#define TT_CONFIG_OPTION_SUBPIXEL_HINTING  2
+/* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  ( 1 | 2 ) */
 
 
   /**************************************************************************
@@ -740,7 +705,7 @@ FT_BEGIN_HEADER
    * flags array which can be used to disambiguate, but old fonts will not
    * have them.
    *
-   *   https://learn.microsoft.com/typography/opentype/spec/glyf
+   *   https://www.microsoft.com/typography/otspec/glyf.htm
    *   https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6glyf.html
    */
 #undef TT_CONFIG_OPTION_COMPONENT_OFFSET_SCALED
@@ -753,39 +718,15 @@ FT_BEGIN_HEADER
    * 'avar' tables).  Tagged 'Font Variations', this is now part of OpenType
    * also.  This has many similarities to Type~1 Multiple Masters support.
    */
-#define TT_CONFIG_OPTION_GX_VAR_SUPPORT
-
-
-  /**************************************************************************
-   *
-   * Define `TT_CONFIG_OPTION_NO_BORING_EXPANSION` if you want to exclude
-   * support for 'boring' OpenType specification expansions.
-   *
-   *   https://github.com/harfbuzz/boring-expansion-spec
-   *
-   * Right now, the following features are covered:
-   *
-   *   - 'avar' version 2.0
-   *
-   * Most likely, this is a temporary configuration option to be removed in
-   * the near future, since it is assumed that eventually those features are
-   * added to the OpenType standard.
-   */
-/* #define TT_CONFIG_OPTION_NO_BORING_EXPANSION */
+// #define TT_CONFIG_OPTION_GX_VAR_SUPPORT
 
 
   /**************************************************************************
    *
    * Define `TT_CONFIG_OPTION_BDF` if you want to include support for an
-   * embedded 'BDF~' table within an SFNT-based `.otb` font file.  This table
-   * is an extension used by X11 to preserve BDF properties after conversion
-   * to SFNT containers.  See
-   *
-   *   https://fontforge.org/docs/techref/non-standard.html#non-standard-bdf
-   *
-   * for more details.
+   * embedded 'BDF~' table within SFNT-based bitmap formats.
    */
-#define TT_CONFIG_OPTION_BDF
+// #define TT_CONFIG_OPTION_BDF
 
 
   /**************************************************************************
@@ -804,22 +745,6 @@ FT_BEGIN_HEADER
 #ifndef TT_CONFIG_OPTION_MAX_RUNNABLE_OPCODES
 #define TT_CONFIG_OPTION_MAX_RUNNABLE_OPCODES  1000000L
 #endif
-
-
-  /**************************************************************************
-   *
-   * Option `TT_CONFIG_OPTION_GPOS_KERNING` enables a basic GPOS kerning
-   * implementation (for TrueType and OpenType fonts only).  With this
-   * defined, FreeType is able to get kerning pair data from the GPOS 'kern'
-   * feature as well as legacy 'kern' tables; without this defined, FreeType
-   * will only be able to use legacy 'kern' tables.
-   *
-   * Note that FreeType does not support more advanced GPOS layout features;
-   * even the 'kern' feature implemented here doesn't handle more
-   * sophisticated kerning variants.  Use a higher-level library like
-   * HarfBuzz instead for that.
-   */
-#define TT_CONFIG_OPTION_GPOS_KERNING
 
 
   /*************************************************************************/
@@ -865,7 +790,7 @@ FT_BEGIN_HEADER
    * into an existing face.  Note that if set, the Type~1 driver will be
    * unable to produce kerning distances.
    */
-#undef T1_CONFIG_OPTION_NO_AFM
+/* #undef T1_CONFIG_OPTION_NO_AFM */
 
 
   /**************************************************************************
@@ -873,7 +798,7 @@ FT_BEGIN_HEADER
    * Define this configuration macro if you want to prevent the compilation
    * of the Multiple Masters font support in the Type~1 driver.
    */
-#undef T1_CONFIG_OPTION_NO_MM_SUPPORT
+/* #undef T1_CONFIG_OPTION_NO_MM_SUPPORT */
 
 
   /**************************************************************************
@@ -883,7 +808,7 @@ FT_BEGIN_HEADER
    * switch between the two engines using the `hinting-engine` property of
    * the 'type1' driver module.
    */
-#define T1_CONFIG_OPTION_OLD_ENGINE
+/* #define T1_CONFIG_OPTION_OLD_ENGINE */
 
 
   /*************************************************************************/
@@ -925,7 +850,7 @@ FT_BEGIN_HEADER
    * between the two engines using the `hinting-engine` property of the 'cff'
    * driver module.
    */
-#define CFF_CONFIG_OPTION_OLD_ENGINE
+/* #define CFF_CONFIG_OPTION_OLD_ENGINE */
 
 
   /*************************************************************************/
@@ -952,7 +877,7 @@ FT_BEGIN_HEADER
    * If this option is activated, it can be controlled with the
    * `no-long-family-names` property of the 'pcf' driver module.
    */
-#define PCF_CONFIG_OPTION_LONG_FAMILY_NAMES
+/* #define PCF_CONFIG_OPTION_LONG_FAMILY_NAMES */
 
 
   /*************************************************************************/
@@ -969,7 +894,7 @@ FT_BEGIN_HEADER
    * Compile 'autofit' module with CJK (Chinese, Japanese, Korean) script
    * support.
    */
-#define AF_CONFIG_OPTION_CJK
+// #define AF_CONFIG_OPTION_CJK
 
 
   /**************************************************************************
@@ -981,6 +906,24 @@ FT_BEGIN_HEADER
 #ifdef AF_CONFIG_OPTION_CJK
 #define AF_CONFIG_OPTION_INDIC
 #endif
+
+
+  /**************************************************************************
+   *
+   * Compile 'autofit' module with warp hinting.  The idea of the warping
+   * code is to slightly scale and shift a glyph within a single dimension so
+   * that as much of its segments are aligned (more or less) on the grid.  To
+   * find out the optimal scaling and shifting value, various parameter
+   * combinations are tried and scored.
+   *
+   * You can switch warping on and off with the `warping` property of the
+   * auto-hinter (see file `ftdriver.h` for more information; by default it
+   * is switched off).
+   *
+   * This experimental option is not active if the rendering mode is
+   * `FT_RENDER_MODE_LIGHT`.
+   */
+// #define AF_CONFIG_OPTION_USE_WARPER
 
 
   /**************************************************************************
@@ -1016,13 +959,20 @@ FT_BEGIN_HEADER
 
 
   /*
-   * The next two macros are defined if native TrueType hinting is
+   * The next three macros are defined if native TrueType hinting is
    * requested by the definitions above.  Don't change this.
    */
 #ifdef TT_CONFIG_OPTION_BYTECODE_INTERPRETER
 #define  TT_USE_BYTECODE_INTERPRETER
+
 #ifdef TT_CONFIG_OPTION_SUBPIXEL_HINTING
+#if TT_CONFIG_OPTION_SUBPIXEL_HINTING & 1
+#define  TT_SUPPORT_SUBPIXEL_HINTING_INFINALITY
+#endif
+
+#if TT_CONFIG_OPTION_SUBPIXEL_HINTING & 2
 #define  TT_SUPPORT_SUBPIXEL_HINTING_MINIMAL
+#endif
 #endif
 #endif
 
@@ -1070,8 +1020,8 @@ FT_BEGIN_HEADER
 #error "Invalid CFF darkening parameters!"
 #endif
 
-
 FT_END_HEADER
+
 
 #endif /* FTOPTION_H_ */
 
