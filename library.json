@@ -1,12 +1,12 @@
 {
   "name":"freetype",
-  "version": "2.10.4",
+  "version": "2.10.4-openhasp1",
   "description":"Software library to render fonts",
   "keywords":"freetype",
   "license": "FreeType License",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.freedesktop.org/freetype"
+    "url": "https://github.com/mvturnho/freetype.git"
 	},
   "frameworks": "*",
   "platforms": "*",
